@@ -20,10 +20,7 @@ import {
   BadRequestErrorResponseSwaggerDto,
   CredentialsErrorResponseSwaggerDto,
 } from "../dtos/authenticate-user.swagger.dto";
-import {
-  ErrorResponseSwaggerDto,
-  ErrorZodResponseSwaggerDto,
-} from "../dtos/create-user.swagger.dto";
+import { ErrorZodResponseSwaggerDto } from "../dtos/create-user.swagger.dto";
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),

@@ -34,7 +34,8 @@ describe("Authenticate Use Case", () => {
       password: "123456",
     }); //solicito login com as credenciais que usei para criar um usuario
 
-    expect(user.id).toEqual(expect.any(String)); //espero que retorne um id, mostrando que foi feito a autentição com sucesso
+    expect(user.email).toEqual("johndoe@example.com"); //espero que retorno o mesmo email
+    expect(user.lastLogin).toEqual(expect.any(Date)); //espero que retorno a data do ultimo login
   });
 
   it("should not be possible to authenticate with an incorrect email address.", async () => {

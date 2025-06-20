@@ -12,7 +12,13 @@ interface AuthenticateUseCaseParams {
 }
 // Resposta do caso de uso
 interface AuthenticateUseCaseResponse {
-  user: User;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: "user" | "admin";
+    lastLogin: Date;
+  };
 }
 
 @Injectable()
@@ -24,17 +30,29 @@ export class AuthenticateUseCase {
     password,
   }: AuthenticateUseCaseParams): Promise<AuthenticateUseCaseResponse> {
     // Verifica se o usuário existe e se a senha está correta
-    const user = await this.userRepository.findByEmail(email);
+    const userOnDatabase = await this.userRepository.findByEmail(email);
 
-    if (!user) {
+    if (!userOnDatabase) {
       throw new UserEmailNotFound();
     }
 
-    const isPasswordValid = await compare(password, user.password);
+    const isPasswordValid = await compare(password, userOnDatabase.password);
 
     if (!isPasswordValid) {
       throw new UserCredentialsError();
     }
+
+    const registerUserLogin = await this.userRepository.registerLogin(
+      userOnDatabase.id
+    ); // registra ultimo login do usuario
+
+    const user = {
+      id: registerUserLogin.id,
+      name: registerUserLogin.name,
+      email: registerUserLogin.email,
+      role: registerUserLogin.role,
+      lastLogin: registerUserLogin.lastLogin,
+    };
 
     // Retorna o usuário autenticado
     return { user };

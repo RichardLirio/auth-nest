@@ -6,7 +6,7 @@ export const envSchema = z.object({
   DATABASE_PASSWORD: z.string(),
   DATABASE_DB: z.string(),
   DATABASE_URL: z.string().url(),
-  VERSION: z.coerce.number(),
+  VERSION: z.coerce.number().default(1),
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
 }); //esquema do arquivo env

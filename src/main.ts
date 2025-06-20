@@ -10,13 +10,18 @@ async function bootstrap() {
   const configService = app.get<ConfigService<Env>>(ConfigService);
   const port = configService.get("PORT", { infer: true });
 
+  // Definindo prefixo da versão da api
+  const apiVersion = configService.getOrThrow("VERSION");
+  app.setGlobalPrefix(`api/v${apiVersion}`);
+
+  // configuração do swagger
   const config = new DocumentBuilder()
     .setTitle("API de Autenticação de Usuários")
     .setDescription("Documentação da API para gerenciamento de usuários")
-    .setVersion("1.0")
+    .setVersion(apiVersion)
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("docs", app, document); // Configuração do Swagger
+  SwaggerModule.setup("docs", app, document);
 
   await app.listen(port);
 }

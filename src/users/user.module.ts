@@ -5,14 +5,15 @@ import { UserOrmEntity } from "@/database/typeOrm/entities/user-entity";
 import { CreateUserController } from "./http/create-user.controller";
 import { CreateUserUseCase } from "./application/use-cases/create-user";
 import { TypeOrmUserRepository } from "@/database/typeOrm/repositories/user-typeorm-repository";
-import { AuthenticateController } from "./http/authenticate-user.controller";
-import { AuthModule } from "@/auth/auth.module";
+import { AuthenticateController } from "./http/auth.controller";
+import { AuthenticateUseCase } from "./application/use-cases/authenticate-user";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserOrmEntity]), AuthModule],
+  imports: [TypeOrmModule.forFeature([UserOrmEntity])],
   controllers: [CreateUserController, AuthenticateController],
   providers: [
     CreateUserUseCase,
+    AuthenticateUseCase,
     {
       provide: UserRepository,
       useClass: TypeOrmUserRepository,

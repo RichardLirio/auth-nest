@@ -7,9 +7,9 @@ import {
   UsePipes,
 } from "@nestjs/common";
 import { z } from "zod";
-import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
-import { CreateUserUseCase } from "./application/use-cases/create-user";
-import { UserEmailConflictError } from "./application/err/user-email-already-exist-error";
+import { ZodValidationPipe } from "../../pipes/zod-validation-pipe";
+import { CreateUserUseCase } from "../application/use-cases/create-user";
+import { UserEmailConflictError } from "../application/err/user-email-already-exist-error";
 
 const createUserBodySchema = z.object({
   name: z.string(),
@@ -21,7 +21,7 @@ const createUserBodySchema = z.object({
 type CreateUserBodySchema = z.infer<typeof createUserBodySchema>;
 
 @Controller("users")
-export class UsersController {
+export class CreateUserController {
   constructor(private readonly createUserUseCase: CreateUserUseCase) {}
 
   @Post()

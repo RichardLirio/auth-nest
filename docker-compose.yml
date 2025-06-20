@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${mydb}
+      POSTGRES_DB: ${DATABASE_DB}
       PGDATA: /data/postgres
     volumes:
       - ./data/pg:/data/postgres

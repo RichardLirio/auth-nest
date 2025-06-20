@@ -28,7 +28,7 @@ const createUserBodySchema = z.object({
 type CreateUserBodySchema = z.infer<typeof createUserBodySchema>;
 
 @ApiTags("Users")
-@Controller("users")
+@Controller("auth/register")
 export class CreateUserController {
   constructor(private readonly createUserUseCase: CreateUserUseCase) {}
 

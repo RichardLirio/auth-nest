@@ -129,3 +129,36 @@ Para alterar a versão da API:
 1. Edite o arquivo `.env` e modifique a variável `VERSION`. Exemplo:
    ```env
    VERSION=2
+
+
+### Como usar a autenticação no Swagger
+
+1. **Obter o token JWT**:
+- Acesse a rota `POST /api/v1/auth/login`.
+- Insira um email e senha válidos no corpo da requisição (ex.: `{ "email": "johndoe@example.com", "password": "123456" }`).
+- Copie o `access_token` retornado na resposta.
+
+2. **Configurar o token**:
+- Clique no botão **Authorize** no topo da interface do Swagger.
+- Insira o token no formato `Bearer <access_token>` (ex.: `Bearer eyJ...`).
+- Clique em **Authorize** para salvar.
+
+3. **Testar rotas protegidas**:
+- Acesse rotas como `GET /api/v1/users` ou `GET /api/v1/user/userId`.
+- O token será automaticamente incluído nas requisições.
+- Verifique as respostas:
+   - Erros 401 (não autenticado) ou 403 (não autorizado) serão retornados se o token for inválido ou a role for inadequada.
+
+### Listar Usuários
+
+A rota `GET /api/v1/users` lista todos os usuários, com suporte a filtros e ordenação. Requer autenticação JWT com role `admin`.
+
+**Parâmetros de consulta (query parameters):**
+- `role` (opcional): Filtra usuários por papel (`admin` ou `user`). Ex.: `?role=admin`
+- `sortBy` (opcional): Ordena por `name` ou `createdAt`. Ex.: `?sortBy=name`
+- `order` (opcional): Ordem de classificação (`asc` ou `desc`). Ex.: `?order=asc`
+
+**Exemplo de requisição:**
+```bash
+GET /api/v1/users?role=admin&sortBy=name&order=asc
+Authorization: Bearer <access_token>

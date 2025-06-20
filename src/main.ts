@@ -18,7 +18,16 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle("API de Autenticação de Usuários")
     .setDescription("Documentação da API para gerenciamento de usuários")
-    .setVersion(apiVersion)
+    .setVersion(apiVersion) //Setando a versão da api
+    .addBearerAuth(
+      {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+        description: "Insira o token JWT retornado pela rota /sessions",
+      },
+      "JWT-auth" // Nome da autenticação no Swagger
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("docs", app, document);

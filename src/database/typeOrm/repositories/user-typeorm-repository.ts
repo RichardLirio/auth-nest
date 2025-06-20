@@ -12,6 +12,31 @@ export class TypeOrmUserRepository implements UserRepository {
     private readonly repo: Repository<UserOrmEntity>
   ) {}
 
+  async findMany(
+    params: {
+      role?: string;
+      sortBy?: "name" | "createdAt";
+      order?: "asc" | "desc";
+    } = {}
+  ): Promise<User[]> {
+    let query = this.repo.createQueryBuilder("user");
+
+    // Filtro por role
+    if (params.role) {
+      query = query.where("user.role = :role", { role: params.role });
+    }
+
+    // Ordenação caso o paremetro for passado
+    if (params.sortBy && params.order) {
+      query = query.orderBy(
+        `user.${params.sortBy}`,
+        params.order.toUpperCase() as "ASC" | "DESC"
+      );
+    }
+
+    return await query.getMany();
+  }
+
   async create(user: User): Promise<User> {
     const created = this.repo.create(user);
     const saved = await this.repo.save(created);

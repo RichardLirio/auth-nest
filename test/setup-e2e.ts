@@ -19,6 +19,8 @@ export async function setupTestDatabase() {
   const connection = new DataSource({
     type: "postgres",
     url: process.env.DATABASE_URL,
+    synchronize: false,
+    logging: false,
   });
 
   await connection.initialize();
@@ -33,9 +35,24 @@ export async function cleanupTestDatabase() {
   const connection = new DataSource({
     type: "postgres",
     url: process.env.DATABASE_URL,
+    synchronize: false,
+    logging: false,
   });
 
   await connection.initialize();
   await connection.query(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`);
+  await connection.destroy();
+}
+
+export async function cleanupTableUserDatabase() {
+  const connection = new DataSource({
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    synchronize: false,
+    logging: false,
+  });
+
+  await connection.initialize();
+  await connection.query(`DELETE FROM "${schemaId}".users;`);
   await connection.destroy();
 }

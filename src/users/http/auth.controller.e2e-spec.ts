@@ -47,11 +47,13 @@ describe("Auth user (E2E)", () => {
   }); //derruba schemas apos os testes
 
   // Teste de sucesso para autenticação
-  test("[POST] /sessions", async () => {
-    const response = await request(app.getHttpServer()).post("/sessions").send({
-      email: "johndoe@example.com",
-      password: "123456",
-    });
+  test("[POST] /auth/login", async () => {
+    const response = await request(app.getHttpServer())
+      .post("/auth/login")
+      .send({
+        email: "johndoe@example.com",
+        password: "123456",
+      });
 
     expect(response.statusCode).toBe(200); //status code esperado no retorno da rota de criação de usuario
     expect(response.body).toEqual({ access_token: expect.any(String) }); // access token presente na reposta
@@ -64,11 +66,13 @@ describe("Auth user (E2E)", () => {
   });
 
   // Teste de erro com email invalido
-  test("[POST] /sessions - should fail with invalid email", async () => {
-    const response = await request(app.getHttpServer()).post("/sessions").send({
-      email: "invalid-email",
-      password: "123456",
-    });
+  test("[POST] /auth/login - should fail with invalid email", async () => {
+    const response = await request(app.getHttpServer())
+      .post("/auth/login")
+      .send({
+        email: "invalid-email",
+        password: "123456",
+      });
 
     expect(response.statusCode).toBe(400);
     expect(response.body).toEqual({
@@ -79,11 +83,13 @@ describe("Auth user (E2E)", () => {
   });
 
   // Teste de erro validação do zod
-  test("[POST] /sessions - should fail with missing fields", async () => {
-    const response = await request(app.getHttpServer()).post("/sessions").send({
-      email: "johndoe@example.com",
-      // password ausente
-    });
+  test("[POST] /auth/login - should fail with missing fields", async () => {
+    const response = await request(app.getHttpServer())
+      .post("/auth/login")
+      .send({
+        email: "johndoe@example.com",
+        // password ausente
+      });
 
     expect(response.statusCode).toBe(400);
     expect(response.body).toEqual({
@@ -94,11 +100,13 @@ describe("Auth user (E2E)", () => {
   });
 
   // Teste de erro quando o email não é registrado na base de dados
-  test("[POST] /sessions - should fail with unregistered email", async () => {
-    const response = await request(app.getHttpServer()).post("/sessions").send({
-      email: "nonexistent@example.com",
-      password: "123456",
-    });
+  test("[POST] /auth/login - should fail with unregistered email", async () => {
+    const response = await request(app.getHttpServer())
+      .post("/auth/login")
+      .send({
+        email: "nonexistent@example.com",
+        password: "123456",
+      });
 
     expect(response.statusCode).toBe(409);
     expect(response.body).toEqual({
@@ -109,11 +117,13 @@ describe("Auth user (E2E)", () => {
   });
 
   // Teste de erro quando a senha está incorreta
-  test("[POST] /sessions - should fail with wrong password", async () => {
-    const response = await request(app.getHttpServer()).post("/sessions").send({
-      email: "johndoe@example.com",
-      password: "wrongpassword",
-    });
+  test("[POST] /auth/login - should fail with wrong password", async () => {
+    const response = await request(app.getHttpServer())
+      .post("/auth/login")
+      .send({
+        email: "johndoe@example.com",
+        password: "wrongpassword",
+      });
 
     expect(response.statusCode).toBe(401);
     expect(response.body).toEqual({
@@ -124,9 +134,9 @@ describe("Auth user (E2E)", () => {
   });
 
   // Teste de erro quando não enviado o body
-  test("[POST] /sessions - should fail with empty body", async () => {
+  test("[POST] /auth/login - should fail with empty body", async () => {
     const response = await request(app.getHttpServer())
-      .post("/sessions")
+      .post("/auth/login")
       .send({});
 
     expect(response.statusCode).toBe(400);

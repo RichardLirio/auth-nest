@@ -1,5 +1,4 @@
 import { UserRepository } from "@/users/domain/repositories/user.repository";
-import { hash } from "bcryptjs";
 import { AuthenticateUseCase } from "./authenticate-user";
 import { InMemoryUsersRepository } from "test/repositories/in-memory-usuario-repository";
 import { randomUUID } from "node:crypto";

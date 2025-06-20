@@ -30,12 +30,14 @@ describe("Create user (E2E)", () => {
     await cleanupTestDatabase();
   }); //derruba schemas apos os testes
 
-  test("[POST] /users", async () => {
-    const response = await request(app.getHttpServer()).post("/users").send({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: "123456",
-    });
+  test("[POST] /auth/register", async () => {
+    const response = await request(app.getHttpServer())
+      .post("/auth/register")
+      .send({
+        name: "John Doe",
+        email: "johndoe@example.com",
+        password: "123456",
+      });
 
     expect(response.statusCode).toBe(201); //status code esperado no retorno da rota de criação de usuario
 

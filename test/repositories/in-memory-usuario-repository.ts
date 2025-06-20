@@ -7,64 +7,37 @@ import { register } from "node:module";
 export class InMemoryUsersRepository implements UserRepository {
   public items: User[] = []; // Armazena os usuários em memória
 
-  // async deleteById(id: string) {
-  //   // Busca um usuário pelo ID
-  //   const user = this.items.find((item) => item.id === id); // Encontra o usuário pelo ID
+  async findMany(
+    params: {
+      role?: string;
+      sortBy?: "name" | "createdAt";
+      order?: "asc" | "desc";
+    } = {}
+  ): Promise<User[]> {
+    let result = [...this.items]; // Create a copy to avoid mutating the original array
 
-  //   if (!user) {
-  //     return null; // Se o usuário não for encontrado, retorna null
-  //   }
+    // Filter by role if provided
+    if (params.role) {
+      result = result.filter((user) => user.role === params.role);
+    }
 
-  //   const userIndex = this.items.findIndex((item) => item.id === id); // Encontra o índice do usuário na lista de usuários
+    // Sort if sortBy and order are provided
+    if (params.sortBy && params.order) {
+      result.sort((a, b) => {
+        if (params.sortBy === "name") {
+          return params.order === "asc"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name);
+        } else {
+          return params.order === "asc"
+            ? a.createdAt.getTime() - b.createdAt.getTime()
+            : b.createdAt.getTime() - a.createdAt.getTime();
+        }
+      });
+    }
 
-  //   this.items.splice(userIndex, 1); // Remove o usuário da lista de usuários em memória
-
-  //   return user; // Retorna o usuário encontrado ou null se não existir
-  // }
-
-  // async findMany() {
-  //   const result = this.items.map((user) => {
-  //     const empresa = this.empresas.find((e) => e.id === user.empresaId);
-
-  //     return {
-  //       id: user.id,
-  //       nome: user.nome,
-  //       email: user.email,
-  //       cargo: user.cargo,
-  //       createdAt: user.createdAt,
-  //       empresa: {
-  //         nome: empresa?.nome ?? "Empresa não encontrada",
-  //       },
-  //     };
-  //   });
-
-  //   return result;
-  // }
-
-  // async findById(id: string) {
-  //   // Busca um usuário pelo ID
-  //   const user = this.items.find((item) => item.id === id); // Encontra o usuário pelo ID
-
-  //   if (!user) {
-  //     return null; // Se o usuário não for encontrado, retorna null
-  //   }
-
-  //   const empresa = this.empresas.find((item) => item.id === user.empresaId); // Encontra o veiculo pelo ID
-
-  //   return {
-  //     id: user.id,
-  //     nome: user.nome,
-  //     email: user.email,
-  //     cargo: user.cargo,
-  //     createdAt: user.createdAt,
-  //     empresaId: user.empresaId,
-  //     empresa: {
-  //       nome: empresa?.nome ?? "",
-  //       cnpj: empresa?.cnpj ?? "",
-  //       Url_Ws: empresa?.Url_Ws ?? "",
-  //     },
-  //   }; // Retorna o usuário encontrado ou null se não existir
-  // }
+    return result;
+  }
 
   async findByEmail(email: string) {
     // Busca um usuário pelo email

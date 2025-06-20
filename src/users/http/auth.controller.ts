@@ -30,7 +30,7 @@ const authenticateBodySchema = z.object({
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 
 @ApiTags("Users")
-@Controller("/sessions")
+@Controller("/auth/login")
 export class AuthenticateController {
   constructor(
     private jwt: JwtService,

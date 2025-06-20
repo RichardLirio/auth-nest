@@ -1,5 +1,5 @@
 export class UserEmailConflictError extends Error {
   constructor() {
-    super("User Email already exist."); // Mensagem de erro personalizada
+    super("User with same e-mail address already exists."); // Mensagem de erro personalizada
   }
 }

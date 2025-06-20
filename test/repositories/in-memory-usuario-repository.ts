@@ -1,6 +1,7 @@
 import { User } from "@/users/domain/entities/user.entity";
 import { UserRepository } from "@/users/domain/repositories/user.repository";
 import { randomUUID } from "node:crypto";
+import { register } from "node:module";
 /// Cria uma classe que implementa a interface do repositório de usuários
 /// Essa classe é responsável por armazenar os usuários em memória
 export class InMemoryUsersRepository implements UserRepository {
@@ -94,12 +95,13 @@ export class InMemoryUsersRepository implements UserRepository {
     return user; // Retorna o usuário criado
   }
 
-  // async update(data: Prisma.UsuarioUpdateInput) {
-  //   // Atualiza um usuário em memória
-  //   const index = this.items.findIndex((item) => item.id === data.id); // Encontra o usuário pelo ID
+  async registerLogin(userId: string) {
+    // Atualiza um usuário em memória
+    const index = this.items.findIndex((item) => item.id === userId); // Encontra o usuário pelo ID
+    const now = new Date();
 
-  //   Object.assign(this.items[index], data); // Atualiza os dados do usuário encontrado
+    Object.assign(this.items[index], { ...this.items[index], lastLogin: now }); // Atualiza os dados do usuário encontrado
 
-  //   return this.items[index]; // Retorna o usuário encontrado ou null se não existir
-  // }
+    return this.items[index]; // Retorna o usuário encontrado ou null se não existir
+  }
 }

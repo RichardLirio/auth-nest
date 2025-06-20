@@ -64,11 +64,8 @@ export class CreateUserController {
       return { message: "User created successfully" };
     } catch (error) {
       if (error instanceof UserEmailConflictError) {
-        throw new ConflictException(
-          "User with same e-mail address already exists."
-        );
+        throw new ConflictException(error.message);
       }
-      throw error;
     }
   }
 }

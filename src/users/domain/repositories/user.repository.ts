@@ -4,4 +4,5 @@ export abstract class UserRepository {
   //interface de repositorio o modulo de usuario
   abstract create(user: User): Promise<User>;
   abstract findByEmail(email: string): Promise<User | null>;
+  abstract registerLogin(userId: string): Promise<User>;
 }

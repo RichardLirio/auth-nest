@@ -22,4 +22,13 @@ export class TypeOrmUserRepository implements UserRepository {
     const found = await this.repo.findOneBy({ email });
     return found || null;
   }
+
+  async registerLogin(userId: string) {
+    const foundUser = await this.repo.findOne({ where: { id: userId } }); // Encontra o usuário pelo ID
+    const now = new Date();
+
+    const saved = await this.repo.save({ ...foundUser, lastLogin: now });
+
+    return saved; // Retorna o usuário atualizado
+  }
 }

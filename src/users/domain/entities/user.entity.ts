@@ -6,6 +6,7 @@ export class User {
     public password: string,
     public role: "user" | "admin",
     public createdAt: Date,
-    public updatedAt: Date
+    public updatedAt: Date,
+    public lastLogin?: Date
   ) {}
 }

@@ -5,7 +5,7 @@ export const envSchema = z.object({
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string(),
   DATABASE_DB: z.string(),
-  DATABASE_URL: z.string().url(),
+  DATABASE_SCHEMA: z.string(),
   DATABASE_HOST: z.string(),
   VERSION: z.coerce.number(),
   JWT_SECRET: z.string(),

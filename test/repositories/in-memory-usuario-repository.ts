@@ -1,5 +1,5 @@
-import { UserRepository } from "@/domain/user/application/repositories/user.repository";
-import { User } from "@/domain/user/enterprise/entities/user.entity";
+import { User } from "@/users/domain/entities/user.entity";
+import { UserRepository } from "@/users/domain/repositories/user.repository";
 import { randomUUID } from "node:crypto";
 /// Cria uma classe que implementa a interface do repositório de usuários
 /// Essa classe é responsável por armazenar os usuários em memória

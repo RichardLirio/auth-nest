@@ -1,8 +1,9 @@
-import { UserEmailConflictError } from "@/domain/user/application/err/user-email-already-exist-error";
-import { User } from "../../enterprise/entities/user.entity";
-import { hashPassword } from "../../utils/hash";
-import { UserRepository } from "../repositories/user.repository";
+import { User } from "../../domain/entities/user.entity";
+import { hashPassword } from "../../../shared/utils/hash";
+import { UserRepository } from "../../domain/repositories/user.repository";
 import { randomUUID } from "node:crypto";
+import { Injectable } from "@nestjs/common";
+import { UserEmailConflictError } from "../err/user-email-already-exist-error";
 
 interface CreateUserUseCaseRequest {
   name: string;
@@ -15,6 +16,7 @@ interface CreateUserUseCaseResponse {
   user: User;
 } //retorno do caso de uso para criação de um usuario
 
+@Injectable()
 export class CreateUserUseCase {
   //caso de uso para criação de um usuario
   constructor(private readonly userRepository: UserRepository) {}

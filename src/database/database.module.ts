@@ -2,8 +2,10 @@ import { Env } from "@/env";
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { UserOrmEntity } from "./typeOrm/entities/user-entity";
 
 @Module({
+  //modulo do typeorm configurado com as variaveis de ambientes
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async (config: ConfigService<Env, true>) => ({
@@ -13,7 +15,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
         username: config.get("DATABASE_USER", { infer: true }),
         password: config.get("DATABASE_PASSWORD", { infer: true }),
         database: config.get("DATABASE_DB", { infer: true }),
-        entities: [__dirname + "/entities/**"],
+
+        entities: [UserOrmEntity],
         migrations: [__dirname + "/migrations/*.ts"],
         synchronize: false,
       }),

@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:3333
+@authToken = {{Authenticate.response.body.access_token}}
+
+# @name Create_user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "123456",
+}
+
+###
+
+# @name Authenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+    "email": "johndoe@example.com",
+    "password": "123456",
+}
+
+

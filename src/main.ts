@@ -14,6 +14,24 @@ async function bootstrap() {
   const apiVersion = configService.getOrThrow("VERSION");
   app.setGlobalPrefix(`api/v${apiVersion}`);
 
+  const allowedOrigins = configService
+    .getOrThrow("CORS_ALLOWED_ORIGINS")
+    .split(",");
+
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    maxAge: 86400,
+  });
+
   // configuração do swagger
   const config = new DocumentBuilder()
     .setTitle("API de Autenticação de Usuários")

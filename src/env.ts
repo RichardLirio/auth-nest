@@ -9,6 +9,7 @@ export const envSchema = z.object({
   VERSION: z.coerce.number().default(1),
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
+  CORS_ALLOWED_ORIGINS: z.string(),
 }); //esquema do arquivo env
 
 export type Env = z.infer<typeof envSchema>;

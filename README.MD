@@ -113,13 +113,14 @@ Para gerar chaves seguras para uso em produção:
 
 Se precisar de mais detalhes ou ajustes no projeto, consulte a documentação ou entre em contato!
 
-## Run tests
-
- npm run test:e2e ; npm run test -> unitarios
 
 ## Rodar em desenvolvimento
 
 npm run start:dev
+
+## Run tests
+
+ npm run test:e2e -> precisa estar com a api rodando ; npm run test -> unitarios
 
 ## Configuração da API
 

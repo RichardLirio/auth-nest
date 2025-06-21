@@ -15,9 +15,9 @@ import {
   ApiUnauthorizedResponse,
   ApiForbiddenResponse,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "@/auth/jwt-auth.guard";
-import { RoleGuard } from "@/auth/role.guard";
-import { Roles } from "@/auth/roles.decorator";
+import { JwtAuthGuard } from "@/auth/guard/jwt-auth.guard";
+import { RoleGuard } from "@/auth/guard/role.guard";
+import { Roles } from "@/auth/decorator/roles.decorator";
 import { z } from "zod";
 import { FetchUsersUseCase } from "../application/use-cases/fetch-users";
 import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";

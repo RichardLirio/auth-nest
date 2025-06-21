@@ -39,7 +39,7 @@ describe("Fetch Users Use Case", () => {
     await createUser("John Doe", "johndoe@example.com", "user", now);
     await createUser("Jane Admin", "jane@example.com", "admin", now);
 
-    // Executa o caso de uso para buscar todos os clientes
+    // Executa o caso de uso para buscar todos os usuários
     const { users } = await sut.execute();
 
     // Verifica se a lista de usuarios retornada tem o tamanho correto e contém os usuarios criados

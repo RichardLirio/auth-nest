@@ -51,6 +51,18 @@ export class InMemoryUsersRepository implements UserRepository {
     return user; // Retorna o usuário encontrado ou null se não existir
   }
 
+  async findById(userId: string) {
+    // Busca um usuário pelo email
+    const user = this.items.find((item) => item.id === userId); // Encontra o usuário pelo email
+
+    if (!user) {
+      // Se o usuário não for encontrado, retorna null
+      return null;
+    }
+
+    return user; // Retorna o usuário encontrado ou null se não existir
+  }
+
   async create(data: User) {
     // Cria um novo usuário em memória
     const user = {

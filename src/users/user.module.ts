@@ -6,9 +6,11 @@ import { CreateUserController } from "./http/create-user.controller";
 import { CreateUserUseCase } from "./application/use-cases/create-user";
 import { TypeOrmUserRepository } from "@/database/typeOrm/repositories/user-typeorm-repository";
 import { AuthenticateController } from "./http/auth.controller";
-import { AuthenticateUseCase } from "./application/use-cases/authenticate-user";
+import { AuthenticateUseCase } from "./application/use-cases/authenticate";
 import { FetchUsersController } from "./http/fetch-users.controller";
 import { FetchUsersUseCase } from "./application/use-cases/fetch-users";
+import { GetUserProfileController } from "./http/get-user-profile.controller";
+import { GetUserProfileUseCase } from "./application/use-cases/get-user-profile";
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserOrmEntity])],
@@ -16,11 +18,13 @@ import { FetchUsersUseCase } from "./application/use-cases/fetch-users";
     CreateUserController,
     AuthenticateController,
     FetchUsersController,
+    GetUserProfileController,
   ],
   providers: [
     CreateUserUseCase,
     AuthenticateUseCase,
     FetchUsersUseCase,
+    GetUserProfileUseCase,
     {
       provide: UserRepository,
       useClass: TypeOrmUserRepository,

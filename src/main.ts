@@ -18,6 +18,7 @@ async function bootstrap() {
     .getOrThrow("CORS_ALLOWED_ORIGINS")
     .split(",");
 
+  // Configuração para o cors
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {

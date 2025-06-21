@@ -43,6 +43,11 @@ export class TypeOrmUserRepository implements UserRepository {
     return saved;
   }
 
+  async findById(userId: string): Promise<User | null> {
+    const found = await this.repo.findOneBy({ id: userId });
+    return found || null;
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const found = await this.repo.findOneBy({ email });
     return found || null;

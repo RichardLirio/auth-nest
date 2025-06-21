@@ -89,4 +89,4 @@ export class GetUserProfileController {
   }
 }
 
-//TODO: Criar crud do user
+//TODO: Criar test e2e para o get profile, Criar crud do user

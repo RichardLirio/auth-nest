@@ -7,6 +7,7 @@ import {
   ForbiddenException,
   NotFoundException,
   HttpCode,
+  ConflictException,
 } from "@nestjs/common";
 import {
   ApiTags,
@@ -33,6 +34,8 @@ import {
   UpdateUserDTOSwagger,
   UpdateUserResponseDto,
 } from "../dtos/update-user.swagger.dto";
+import { ErrorResponseSwaggerDto } from "../dtos/create-user.swagger.dto";
+import { UserEmailConflictError } from "../application/err/user-email-already-exist-error";
 
 const updateUserParamsSchema = z.string().uuid();
 
@@ -77,6 +80,11 @@ export class UpdateUserController {
   @ApiUnauthorizedResponse({
     description: "Token JWT não fornecido ou inválido",
   })
+  @ApiResponse({
+    status: 409,
+    description: "Conflito: Email já está em uso",
+    type: ErrorResponseSwaggerDto,
+  })
   @ApiParam({
     name: "id",
     description: "ID do usuário no formato UUID",
@@ -103,6 +111,9 @@ export class UpdateUserController {
     } catch (error) {
       if (error instanceof UserNotExists) {
         throw new NotFoundException(error.message);
+      }
+      if (error instanceof UserEmailConflictError) {
+        throw new ConflictException(error.message);
       }
       throw error;
     }

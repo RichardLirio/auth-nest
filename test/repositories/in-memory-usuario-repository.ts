@@ -104,4 +104,14 @@ export class InMemoryUsersRepository implements UserRepository {
 
     return user; // Retorna o usuário encontrado ou null se não existir
   }
+
+  async update(userId: string, data: Partial<User>): Promise<User> {
+    // Atualiza um usuário em memória
+    const index = this.items.findIndex((item) => item.id === userId); // Encontra o usuário pelo ID
+    const now = new Date();
+
+    Object.assign(this.items[index], { ...data, updatedAt: now }); // Atualiza os dados do usuário encontrado
+
+    return this.items[index]; // Retorna o usuário encontrado ou null se não existir
+  }
 }

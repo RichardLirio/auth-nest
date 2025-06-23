@@ -12,4 +12,5 @@ export abstract class UserRepository {
     sortBy?: "name" | "createdAt";
     order?: "asc" | "desc";
   }): Promise<User[]>;
+  abstract update(userId: string, data: Partial<User>): Promise<User>;
 }

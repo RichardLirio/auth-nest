@@ -3,6 +3,7 @@ import {
   ForbiddenException,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
   UseGuards,
 } from "@nestjs/common";
@@ -28,6 +29,7 @@ import {
   ErrorResponseDto,
   GetUserProfileResponseDto,
 } from "../dtos/get-user-profile.swagger.dto";
+import { UserNotExists } from "../application/err/user-not-exists-error";
 
 const getUserParamsSchema = z.string().uuid();
 
@@ -79,10 +81,15 @@ export class GetUserProfileController {
     if (userReq.role === "user" && id != userReq.sub) {
       throw new ForbiddenException("Insufficient permissions");
     } // se o usuario da requisição for user e o id solicitado for diferete do dele retorna erro
-
-    const { user } = await this.getUserProfileUseCase.execute({
-      userId: id,
-    });
-    return { user };
+    try {
+      const { user } = await this.getUserProfileUseCase.execute({
+        userId: id,
+      });
+      return { user };
+    } catch (error) {
+      if (error instanceof UserNotExists) {
+        throw new NotFoundException(error.message);
+      }
+    }
   }
 }

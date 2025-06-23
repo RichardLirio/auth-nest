@@ -68,7 +68,7 @@ describe("Get User Profile (E2E)", () => {
   }
 
   //Teste positivo para buscar seus proprios dados de usuario
-  it("[GET] /api/v1/user/:id - should fetch own profile as user", async () => {
+  it("[GET] /user/:id - should fetch own profile as user", async () => {
     const user = await createUser(
       "John Doe",
       "john@example.com",
@@ -79,7 +79,7 @@ describe("Get User Profile (E2E)", () => {
     const token = await getToken(user);
 
     const response = await request(app.getHttpServer())
-      .get(`/api/v1/user/${user.id}`)
+      .get(`/user/${user.id}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
@@ -97,7 +97,7 @@ describe("Get User Profile (E2E)", () => {
   });
 
   // Teste positivo para admins buscarem dados de qualquer usuario
-  it("[GET] /api/v1/user/:id - should fetch any profile as admin", async () => {
+  it("[GET] /user/:id - should fetch any profile as admin", async () => {
     const user = await createUser(
       "John Doe",
       "john@example.com",
@@ -115,7 +115,7 @@ describe("Get User Profile (E2E)", () => {
     const token = await getToken(adminUser);
 
     const response = await request(app.getHttpServer())
-      .get(`/api/v1/user/${user.id}`)
+      .get(`/user/${user.id}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.statusCode).toBe(200);
@@ -133,7 +133,7 @@ describe("Get User Profile (E2E)", () => {
   });
 
   //teste para requisições não autorizadas
-  it("[GET] /api/v1/user/:id - should return 401 for unauthorized request", async () => {
+  it("[GET] /user/:id - should return 401 for unauthorized request", async () => {
     const user = await createUser(
       "John Doe",
       "john@example.com",
@@ -141,9 +141,7 @@ describe("Get User Profile (E2E)", () => {
       new Date("2023-01-01")
     );
 
-    const response = await request(app.getHttpServer()).get(
-      `/api/v1/user/${user.id}`
-    );
+    const response = await request(app.getHttpServer()).get(`/user/${user.id}`);
 
     expect(response.statusCode).toBe(401);
     expect(response.body).toEqual({
@@ -153,7 +151,7 @@ describe("Get User Profile (E2E)", () => {
   });
 
   // Teste negativo para requisições de usuarios não admin buscando dados de outro usuario
-  it("[GET] /api/v1/user/:id - should return 403 for user accessing another profile", async () => {
+  it("[GET] /user/:id - should return 403 for user accessing another profile", async () => {
     const user1 = await createUser(
       "John Doe",
       "john@example.com",
@@ -169,7 +167,7 @@ describe("Get User Profile (E2E)", () => {
     const token = await getToken(user1);
 
     const response = await request(app.getHttpServer())
-      .get(`/api/v1/user/${user2.id}`)
+      .get(`/user/${user2.id}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.statusCode).toBe(403);
@@ -181,7 +179,7 @@ describe("Get User Profile (E2E)", () => {
   });
 
   // Teste de envio de uuid invalido
-  it("[GET] /api/v1/user/:id - should return 400 for invalid UUID", async () => {
+  it("[GET] /user/:id - should return 400 for invalid UUID", async () => {
     const admin = await createUser(
       "Jane Admin",
       "jane@example.com",
@@ -191,15 +189,15 @@ describe("Get User Profile (E2E)", () => {
     const token = await getToken(admin);
 
     const response = await request(app.getHttpServer())
-      .get("/api/v1/user/invalid-uuid")
+      .get("/user/invalid-uuid")
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.statusCode).toBe(400);
-    expect(response.body.message).toContain("Invalid UUID format");
+    expect(response.body.message).toContain("Validation failed");
   });
 
   // Teste de envio de id de um usuario não existente no banco de dados
-  it("[GET] /api/v1/user/:id - should return 404 for non-existent user", async () => {
+  it("[GET] /user/:id - should return 404 for non-existent user", async () => {
     const admin = await createUser(
       "Jane Admin",
       "jane@example.com",
@@ -210,7 +208,7 @@ describe("Get User Profile (E2E)", () => {
     const nonExistentId = "123e4567-e89b-12d3-a456-426614174999";
 
     const response = await request(app.getHttpServer())
-      .get(`/api/v1/user/${nonExistentId}`)
+      .get(`/user/${nonExistentId}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.statusCode).toBe(404);

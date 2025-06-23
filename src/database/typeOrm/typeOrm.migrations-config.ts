@@ -9,6 +9,7 @@ const dataSourceOptions: DataSourceOptions = {
   type: "postgres",
   url: process.env.DATABASE_URL,
   schema,
+  ssl: { rejectUnauthorized: false }, // Necessário para conexões externas
   entities: [UserOrmEntity],
   migrations: [__dirname + "/migrations/*.ts"],
   synchronize: false,

@@ -13,6 +13,7 @@ import { UserOrmEntity } from "./typeOrm/entities/user-entity";
         return {
           type: "postgres",
           url: config.get("DATABASE_URL", { infer: true }),
+          ssl: { rejectUnauthorized: false }, // Necessário para conexões externas
           schema, // Define o schema explicitamente
           entities: [UserOrmEntity],
           migrations: [__dirname + "/migrations/*.ts"],

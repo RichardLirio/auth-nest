@@ -11,4 +11,5 @@ export abstract class UserRepository {
     sortBy?: "name" | "createdAt";
     order?: "asc" | "desc";
   }): Promise<User[]>;
+  abstract deleteById(userId: string): Promise<User | null>;
 }

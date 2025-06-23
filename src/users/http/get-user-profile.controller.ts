@@ -31,12 +31,6 @@ import {
 } from "@/users/dtos/get-user-profile.swagger.dto";
 import { UserNotExists } from "@/users/application/err/user-not-exists-error";
 
-const getUserParamsSchema = z.string().uuid().optional();
-
-const paramValidationPipe = new ZodValidationPipe(getUserParamsSchema);
-
-type GetUserParamsSchema = z.infer<typeof getUserParamsSchema>;
-
 @ApiTags("Users")
 @Controller("user")
 @ApiTags("Users")

@@ -60,7 +60,7 @@ export class DeleteUserController {
     @Param("id", paramValidationPipe) id: DeleteUserParamsSchema,
     @CurrentUser() userReq: UserPayload
   ) {
-    if (userReq.role === "user" && id !== userReq.sub) {
+    if (userReq.role === "user") {
       throw new ForbiddenException("Insufficient permissions");
     }
     try {

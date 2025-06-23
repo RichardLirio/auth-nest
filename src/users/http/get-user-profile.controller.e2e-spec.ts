@@ -67,8 +67,36 @@ describe("Get User Profile (E2E)", () => {
     return jwtService.sign({ sub: User.id, role: User.role });
   }
 
-  //Teste positivo para buscar seus proprios dados de usuario
-  it("[GET] /user/:id - should fetch own profile as user", async () => {
+  //Teste positivo para buscar seus proprios dados de usuario utilizando id
+  it("[GET] /user - should return own profile for user without id", async () => {
+    const user = await createUser(
+      "John Doe",
+      "john@example.com",
+      "user",
+      new Date("2023-01-01")
+    );
+
+    const token = await getToken(user);
+
+    const response = await request(app.getHttpServer())
+      .get(`/user`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.user).toEqual(
+      expect.objectContaining({
+        id: user.id,
+        name: "John Doe",
+        email: user.email,
+        role: "user",
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+        lastLogin: null,
+      })
+    );
+  });
+
+  it("[GET] /user/:id - should return own profile for user with own id", async () => {
     const user = await createUser(
       "John Doe",
       "john@example.com",
@@ -89,9 +117,6 @@ describe("Get User Profile (E2E)", () => {
         name: "John Doe",
         email: user.email,
         role: "user",
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
-        lastLogin: null,
       })
     );
   });

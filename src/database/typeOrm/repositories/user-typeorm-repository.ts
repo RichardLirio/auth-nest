@@ -73,4 +73,15 @@ export class TypeOrmUserRepository implements UserRepository {
 
     return foundUser;
   }
+
+  async update(id: string, data: Partial<User>): Promise<User> {
+    await this.repo.update(id, {
+      ...data,
+      updatedAt: new Date(),
+    });
+
+    const updatedUser = await this.repo.findOneBy({ id });
+
+    return updatedUser;
+  }
 }

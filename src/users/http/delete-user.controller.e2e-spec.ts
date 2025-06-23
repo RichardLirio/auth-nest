@@ -67,28 +67,6 @@ describe("Delete User (E2E)", () => {
     return jwtService.sign({ sub: User.id, role: User.role });
   }
 
-  it("[DELETE] /user/:id - should delete own profile as user", async () => {
-    const user = await createUser(
-      "John Doe",
-      "john@example.com",
-      "user",
-      new Date("2023-01-01")
-    );
-
-    const token = await getToken(user);
-
-    const response = await request(app.getHttpServer())
-      .delete(`/user/${user.id}`)
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(response.statusCode).toBe(204);
-    expect(response.body).toEqual({});
-
-    // Verify user is deleted
-    const deletedUser = await userRepository.findOneBy({ id: user.id });
-    expect(deletedUser).toBeNull();
-  });
-
   it("[DELETE] /user/:id - should delete any profile as admin", async () => {
     const user = await createUser(
       "John Doe",

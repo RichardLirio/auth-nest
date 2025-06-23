@@ -13,6 +13,8 @@ import { GetUserProfileController } from "./http/get-user-profile.controller";
 import { GetUserProfileUseCase } from "./application/use-cases/get-user-profile";
 import { DeleteUserController } from "./http/delete-user.controller";
 import { DeleteUserUseCase } from "./application/use-cases/delete-user";
+import { UpdateUserController } from "./http/update-user.controller";
+import { UpdateUserUseCase } from "./application/use-cases/update-user";
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserOrmEntity])],
@@ -22,6 +24,7 @@ import { DeleteUserUseCase } from "./application/use-cases/delete-user";
     FetchUsersController,
     GetUserProfileController,
     DeleteUserController,
+    UpdateUserController,
   ],
   providers: [
     CreateUserUseCase,
@@ -29,6 +32,7 @@ import { DeleteUserUseCase } from "./application/use-cases/delete-user";
     FetchUsersUseCase,
     GetUserProfileUseCase,
     DeleteUserUseCase,
+    UpdateUserUseCase,
     {
       provide: UserRepository,
       useClass: TypeOrmUserRepository,

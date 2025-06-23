@@ -2,101 +2,6 @@
 
 This project is a NestJS-based backend API for user management and authentication, utilizing TypeORM for database operations and JWT for secure authentication. Below are the setup instructions, configuration details, key functionalities of the API, and the project structure.
 
-## Project Structure
-
-The project follows a modular structure for maintainability and scalability. Below is the directory layout:
-
-```
-├── .env.example                       # Example environment variables file
-├── .gitignore                         # Git ignore file
-├── README.md                          # Project documentation
-├── docker-compose.yml                 # Docker configuration for PostgreSQL
-├── nest-cli.json                      # NestJS CLI configuration
-├── package-lock.json                  # NPM lock file
-├── package.json                       # Project dependencies and scripts
-├── src
-│   ├── app.module.ts                  # Root module of the application
-│   ├── auth
-│   │   ├── auth.module.ts             # Authentication module
-│   │   ├── decorator
-│   │   │   ├── current-user-decorator.ts  # Decorator for accessing current user
-│   │   │   └── roles.decorator.ts     # Decorator for role-based access control
-│   │   ├── guard
-│   │   │   ├── jwt-auth.guard.ts      # JWT authentication guard
-│   │   │   └── role.guard.ts          # Role-based authorization guard
-│   │   └── strategy
-│   │       └── jwt.strategy.ts        # JWT strategy for authentication
-│   ├── database
-│   │   ├── database.module.ts         # Database module configuration
-│   │   └── typeOrm
-│   │       ├── entities
-│   │       │   └── user-entity.ts     # TypeORM user entity
-│   │       ├── migrations
-│   │       │   └── 1750362417716-user-table.ts  # Migration for user table
-│   │       ├── repositories
-│   │       │   └── user-typeorm-repository.ts  # TypeORM user repository
-│   │       └── typeOrm.migrations-config.ts    # TypeORM migration configuration
-│   ├── env.ts                         # Environment variable configuration
-│   ├── main.ts                        # Application entry point
-│   ├── pipes
-│   │   └── zod-validation-pipe.ts     # Zod validation pipe for input validation
-│   ├── shared
-│   │   └── utils
-│   │       └── hash.ts                # Utility for password hashing
-│   └── users
-│       ├── application
-│       │   ├── err
-│       │   │   ├── user-credentials-error.ts       # Error for invalid credentials
-│       │   │   ├── user-email-already-exist-error.ts  # Error for duplicate email
-│       │   │   ├── user-email-not-exist-error.ts   # Error for non-existent email
-│       │   │   └── user-not-exists-error.ts        # Error for non-existent user
-│       │   └── use-cases
-│       │       ├── authenticate.spec.ts            # Tests for authentication use case
-│       │       ├── authenticate.ts                 # Authentication use case
-│       │       ├── create-user.spec.ts             # Tests for create user use case
-│       │       ├── create-user.ts                  # Create user use case
-│       │       ├── delete-user.spec.ts             # Tests for delete user use case
-│       │       ├── delete-user.ts                  # Delete user use case
-│       │       ├── fetch-users.spec.ts             # Tests for fetch users use case
-│       │       ├── fetch-users.ts                  # Fetch users use case
-│       │       ├── get-user-profile.spec.ts        # Tests for get user profile use case
-│       │       ├── get-user-profile.ts             # Get user profile use case
-│       │       ├── update-user.spec.ts             # Tests for update user use case
-│       │       └── update-user.ts                  # Update user use case
-│       ├── domain
-│       │   ├── entities
-│       │   │   └── user.entity.ts                 # Domain user entity
-│       │   └── repositories
-│       │       └── user.repository.ts             # User repository interface
-│       ├── dtos
-│       │   ├── authenticate-user.swagger.dto.ts    # DTO for authentication Swagger
-│       │   ├── create-user.swagger.dto.ts          # DTO for create user Swagger
-│       │   ├── fetch-user.swagger.dto.ts           # DTO for fetch users Swagger
-│       │   ├── get-user-profile.swagger.dto.ts     # DTO for get user profile Swagger
-│       │   └── update-user.swagger.dto.ts          # DTO for update user Swagger
-│       ├── http
-│       │   ├── auth.controller.e2e-spec.ts        # E2E tests for auth controller
-│       │   ├── auth.controller.ts                  # Authentication controller
-│       │   ├── create-user.controller.e2e-spec.ts  # E2E tests for create user controller
-│       │   ├── create-user.controller.ts           # Create user controller
-│       │   ├── delete-user.controller.e2e-spec.ts  # E2E tests for delete user controller
-│       │   ├── delete-user.controller.ts           # Delete user controller
-│       │   ├── fetch-users.controller.e2e-spec.ts  # E2E tests for fetch users controller
-│       │   ├── fetch-users.controller.ts           # Fetch users controller
-│       │   ├── get-user-profile.controller.e2e-spec.ts  # E2E tests for get user profile controller
-│       │   ├── get-user-profile.controller.ts      # Get user profile controller
-│       │   ├── update-user.controller.e2e-spec.ts  # E2E tests for update user controller
-│       │   └── update-user.controller.ts           # Update user controller
-│       └── user.module.ts                         # User module
-├── test
-│   ├── repositories
-│   │   └── in-memory-usuario-repository.ts        # In-memory repository for testing
-│   └── setup-e2e.ts                              # E2E test setup
-├── tsconfig.build.json                           # TypeScript build configuration
-├── tsconfig.json                                 # TypeScript configuration
-├── vitest.config.e2e.mts                         # Vitest configuration for E2E tests
-└── vitest.config.mts                             # Vitest configuration for unit tests
-```
 
 ## Prerequisites
 
@@ -271,6 +176,103 @@ The `.env.example` file includes sample JWT keys for testing. Copy them to `.env
 - Ensure `.env` is listed in `.gitignore` to prevent committing sensitive data.
 - Keep the private key secure and never share it.
 - The public key can be shared with services needing to verify JWTs.
+
+## Project Structure
+
+The project follows a modular structure for maintainability and scalability. Below is the directory layout:
+
+```
+├── .env.example                       # Example environment variables file
+├── .gitignore                         # Git ignore file
+├── README.md                          # Project documentation
+├── docker-compose.yml                 # Docker configuration for PostgreSQL
+├── nest-cli.json                      # NestJS CLI configuration
+├── package-lock.json                  # NPM lock file
+├── package.json                       # Project dependencies and scripts
+├── src
+│   ├── app.module.ts                  # Root module of the application
+│   ├── auth
+│   │   ├── auth.module.ts             # Authentication module
+│   │   ├── decorator
+│   │   │   ├── current-user-decorator.ts  # Decorator for accessing current user
+│   │   │   └── roles.decorator.ts     # Decorator for role-based access control
+│   │   ├── guard
+│   │   │   ├── jwt-auth.guard.ts      # JWT authentication guard
+│   │   │   └── role.guard.ts          # Role-based authorization guard
+│   │   └── strategy
+│   │       └── jwt.strategy.ts        # JWT strategy for authentication
+│   ├── database
+│   │   ├── database.module.ts         # Database module configuration
+│   │   └── typeOrm
+│   │       ├── entities
+│   │       │   └── user-entity.ts     # TypeORM user entity
+│   │       ├── migrations
+│   │       │   └── 1750362417716-user-table.ts  # Migration for user table
+│   │       ├── repositories
+│   │       │   └── user-typeorm-repository.ts  # TypeORM user repository
+│   │       └── typeOrm.migrations-config.ts    # TypeORM migration configuration
+│   ├── env.ts                         # Environment variable configuration
+│   ├── main.ts                        # Application entry point
+│   ├── pipes
+│   │   └── zod-validation-pipe.ts     # Zod validation pipe for input validation
+│   ├── shared
+│   │   └── utils
+│   │       └── hash.ts                # Utility for password hashing
+│   └── users
+│       ├── application
+│       │   ├── err
+│       │   │   ├── user-credentials-error.ts       # Error for invalid credentials
+│       │   │   ├── user-email-already-exist-error.ts  # Error for duplicate email
+│       │   │   ├── user-email-not-exist-error.ts   # Error for non-existent email
+│       │   │   └── user-not-exists-error.ts        # Error for non-existent user
+│       │   └── use-cases
+│       │       ├── authenticate.spec.ts            # Tests for authentication use case
+│       │       ├── authenticate.ts                 # Authentication use case
+│       │       ├── create-user.spec.ts             # Tests for create user use case
+│       │       ├── create-user.ts                  # Create user use case
+│       │       ├── delete-user.spec.ts             # Tests for delete user use case
+│       │       ├── delete-user.ts                  # Delete user use case
+│       │       ├── fetch-users.spec.ts             # Tests for fetch users use case
+│       │       ├── fetch-users.ts                  # Fetch users use case
+│       │       ├── get-user-profile.spec.ts        # Tests for get user profile use case
+│       │       ├── get-user-profile.ts             # Get user profile use case
+│       │       ├── update-user.spec.ts             # Tests for update user use case
+│       │       └── update-user.ts                  # Update user use case
+│       ├── domain
+│       │   ├── entities
+│       │   │   └── user.entity.ts                 # Domain user entity
+│       │   └── repositories
+│       │       └── user.repository.ts             # User repository interface
+│       ├── dtos
+│       │   ├── authenticate-user.swagger.dto.ts    # DTO for authentication Swagger
+│       │   ├── create-user.swagger.dto.ts          # DTO for create user Swagger
+│       │   ├── fetch-user.swagger.dto.ts           # DTO for fetch users Swagger
+│       │   ├── get-user-profile.swagger.dto.ts     # DTO for get user profile Swagger
+│       │   └── update-user.swagger.dto.ts          # DTO for update user Swagger
+│       ├── http
+│       │   ├── auth.controller.e2e-spec.ts        # E2E tests for auth controller
+│       │   ├── auth.controller.ts                  # Authentication controller
+│       │   ├── create-user.controller.e2e-spec.ts  # E2E tests for create user controller
+│       │   ├── create-user.controller.ts           # Create user controller
+│       │   ├── delete-user.controller.e2e-spec.ts  # E2E tests for delete user controller
+│       │   ├── delete-user.controller.ts           # Delete user controller
+│       │   ├── fetch-users.controller.e2e-spec.ts  # E2E tests for fetch users controller
+│       │   ├── fetch-users.controller.ts           # Fetch users controller
+│       │   ├── get-user-profile.controller.e2e-spec.ts  # E2E tests for get user profile controller
+│       │   ├── get-user-profile.controller.ts      # Get user profile controller
+│       │   ├── update-user.controller.e2e-spec.ts  # E2E tests for update user controller
+│       │   └── update-user.controller.ts           # Update user controller
+│       └── user.module.ts                         # User module
+├── test
+│   ├── repositories
+│   │   └── in-memory-usuario-repository.ts        # In-memory repository for testing
+│   └── setup-e2e.ts                              # E2E test setup
+├── tsconfig.build.json                           # TypeScript build configuration
+├── tsconfig.json                                 # TypeScript configuration
+├── vitest.config.e2e.mts                         # Vitest configuration for E2E tests
+└── vitest.config.mts                             # Vitest configuration for unit tests
+```
+
 
 ## API Endpoints and Business Rules
 

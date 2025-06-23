@@ -48,7 +48,6 @@ describe("Update User Use Case", () => {
     const { user } = await sut.execute({
       userId: userCreated.id,
       name: "John Doe update",
-      email: "johndoe@example.com",
       password: "123456",
       role: "user",
     });

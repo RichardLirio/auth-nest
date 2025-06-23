@@ -474,6 +474,6 @@ The `.env.example` file includes sample JWT keys for testing. Copy them to `.env
 
 For further details or assistance, consult the Swagger documentation at /docs or reach out to the project maintainer:
 
-Author: Richard Silva Lirio
-LinkedIn: [Richard Lirio](https://www.linkedin.com/in/richard-silva-lirio-b97484250/)
-GitHub: [RichardLirio](https://github.com/richardlirio)
+- Author: Richard Silva Lirio
+- LinkedIn: [Richard Lirio](https://www.linkedin.com/in/richard-silva-lirio-b97484250/)
+- GitHub: [RichardLirio](https://github.com/richardlirio)

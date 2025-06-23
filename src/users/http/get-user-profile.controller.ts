@@ -67,12 +67,10 @@ export class GetUserProfileController {
   })
   @ApiUnauthorizedResponse({
     description: "Token JWT não fornecido ou inválido",
-    type: ErrorResponseDto,
   })
   @ApiForbiddenResponse({
     description:
       "Usuário não possui permissão para acessar o perfil solicitado",
-    type: ErrorResponseDto,
   })
   async Get(
     @CurrentUser() userReq: UserPayload,
@@ -85,8 +83,6 @@ export class GetUserProfileController {
     const { user } = await this.getUserProfileUseCase.execute({
       userId: id,
     });
-    return { user }; // TODO: documentação swagger e esconder password no retorno
+    return { user };
   }
 }
-
-//TODO: Criar test e2e para o get profile, Criar crud do user

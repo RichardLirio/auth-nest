@@ -62,8 +62,9 @@ export class TypeOrmUserRepository implements UserRepository {
     return saved; // Retorna o usuário atualizado
   }
 
-  async deleteById(userId: string): Promise<User | null> {
-    const foundUser = await this.repo.findOne({ where: { id: userId } }); // Encontra o usuário pelo ID
+  async delete(userId: string): Promise<User | null> {
+    const foundUser = await this.repo.findOneBy({ id: userId });
+
     if (!foundUser) {
       return null;
     }

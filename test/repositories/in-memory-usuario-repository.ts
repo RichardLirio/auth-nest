@@ -90,7 +90,7 @@ export class InMemoryUsersRepository implements UserRepository {
     return this.items[index]; // Retorna o usuário encontrado ou null se não existir
   }
 
-  async deleteById(id: string) {
+  async delete(id: string) {
     // Busca um usuário pelo ID
     const user = this.items.find((item) => item.id === id); // Encontra o usuário pelo ID
 

@@ -1,5 +1,5 @@
 import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
-import { AuthenticateUseCase } from "@/users/application/use-cases/authenticate-user";
+import { AuthenticateUseCase } from "@/users/application/use-cases/authenticate";
 import {
   Body,
   ConflictException,

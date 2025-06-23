@@ -22,11 +22,6 @@ export class RoleGuard implements CanActivate {
       ]
     );
 
-    // Se não houver roles definidas, permite o acesso (opcional)
-    if (!requiredRoles) {
-      return true;
-    }
-
     // Obtém o usuário do request (injetado pelo JwtAuthGuard)
     const request = context.switchToHttp().getRequest();
     const user = request.user;

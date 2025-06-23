@@ -51,6 +51,18 @@ export class InMemoryUsersRepository implements UserRepository {
     return user; // Retorna o usuário encontrado ou null se não existir
   }
 
+  async findById(userId: string) {
+    // Busca um usuário pelo email
+    const user = this.items.find((item) => item.id === userId); // Encontra o usuário pelo email
+
+    if (!user) {
+      // Se o usuário não for encontrado, retorna null
+      return null;
+    }
+
+    return user; // Retorna o usuário encontrado ou null se não existir
+  }
+
   async create(data: User) {
     // Cria um novo usuário em memória
     const user = {
@@ -74,6 +86,31 @@ export class InMemoryUsersRepository implements UserRepository {
     const now = new Date();
 
     Object.assign(this.items[index], { ...this.items[index], lastLogin: now }); // Atualiza os dados do usuário encontrado
+
+    return this.items[index]; // Retorna o usuário encontrado ou null se não existir
+  }
+
+  async delete(id: string) {
+    // Busca um usuário pelo ID
+    const user = this.items.find((item) => item.id === id); // Encontra o usuário pelo ID
+
+    if (!user) {
+      return null; // Se o usuário não for encontrado, retorna null
+    }
+
+    const userIndex = this.items.findIndex((item) => item.id === id); // Encontra o índice do usuário na lista de usuários
+
+    this.items.splice(userIndex, 1); // Remove o usuário da lista de usuários em memória
+
+    return user; // Retorna o usuário encontrado ou null se não existir
+  }
+
+  async update(userId: string, data: Partial<User>): Promise<User> {
+    // Atualiza um usuário em memória
+    const index = this.items.findIndex((item) => item.id === userId); // Encontra o usuário pelo ID
+    const now = new Date();
+
+    Object.assign(this.items[index], { ...data, updatedAt: now }); // Atualiza os dados do usuário encontrado
 
     return this.items[index]; // Retorna o usuário encontrado ou null se não existir
   }

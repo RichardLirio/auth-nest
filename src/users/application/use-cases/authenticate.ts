@@ -1,4 +1,3 @@
-import { User } from "@/users/domain/entities/user.entity";
 import { UserRepository } from "@/users/domain/repositories/user.repository";
 import { Injectable } from "@nestjs/common";
 import { compare } from "bcryptjs";

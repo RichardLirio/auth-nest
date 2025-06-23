@@ -1,5 +1,5 @@
 import { UserRepository } from "@/users/domain/repositories/user.repository";
-import { AuthenticateUseCase } from "./authenticate-user";
+import { AuthenticateUseCase } from "./authenticate";
 import { InMemoryUsersRepository } from "test/repositories/in-memory-usuario-repository";
 import { randomUUID } from "node:crypto";
 import { UserEmailNotFound } from "../err/user-email-not-exist-error";

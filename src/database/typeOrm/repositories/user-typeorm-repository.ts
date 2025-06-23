@@ -43,6 +43,11 @@ export class TypeOrmUserRepository implements UserRepository {
     return saved;
   }
 
+  async findById(userId: string): Promise<User | null> {
+    const found = await this.repo.findOneBy({ id: userId });
+    return found || null;
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const found = await this.repo.findOneBy({ email });
     return found || null;
@@ -55,5 +60,28 @@ export class TypeOrmUserRepository implements UserRepository {
     const saved = await this.repo.save({ ...foundUser, lastLogin: now });
 
     return saved; // Retorna o usuário atualizado
+  }
+
+  async delete(userId: string): Promise<User | null> {
+    const foundUser = await this.repo.findOneBy({ id: userId });
+
+    if (!foundUser) {
+      return null;
+    }
+
+    await this.repo.delete(userId); // deleta usuario
+
+    return foundUser;
+  }
+
+  async update(id: string, data: Partial<User>): Promise<User> {
+    await this.repo.update(id, {
+      ...data,
+      updatedAt: new Date(),
+    });
+
+    const updatedUser = await this.repo.findOneBy({ id });
+
+    return updatedUser;
   }
 }
